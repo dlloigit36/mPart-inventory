@@ -152,6 +152,16 @@ form.create-note {
   float: right;
 }
 
+.search-form p {
+  padding: 5px;
+  font-family: "Arial", Helvetica, sans-serif;
+  font-size: 0.8em;
+  font-weight: lighter;
+  font-style: italic;
+  /* color: #ecd187; */
+  color: #f5ba13
+}
+
 footer {
   position: absolute;
   text-align: center;

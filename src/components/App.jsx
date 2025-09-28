@@ -4,9 +4,10 @@ import Footer from "./Footer"
 import Client from "./Client"
 import Part from "./Part"
 import ButtonShowAll from "./ButtonShowAll"
-import SearchForm from "./SearchForm"
+import SearchFormClient from "./SearchFormClient"
+import SearchFormPart from "./SearchFormPart"
 
-const name = "client name"
+const name = "Machinery"
 
 
 function App() {
@@ -19,9 +20,7 @@ function App() {
                 <ButtonShowAll 
                     type="client"
                 />
-                <SearchForm 
-                    text4placeholder="Enter client name to search...."
-                    name="clientName"
+                <SearchFormClient 
                 />
                 <Client />
                 <Client />
@@ -32,9 +31,7 @@ function App() {
                 <ButtonShowAll 
                     type="part"
                 />
-                <SearchForm 
-                    text4placeholder="Enter parts name to search...."
-                    name="partName"
+                <SearchFormPart 
                 />
                 <Part />
                 <Part />
