@@ -6,8 +6,11 @@ import Part from "./Part"
 import ButtonShowAll from "./ButtonShowAll"
 import SearchFormClient from "./SearchFormClient"
 import SearchFormPart from "./SearchFormPart"
+import CreateClient from "./CreateClient"
+import CreatePart from "./CreatePart"
 
 const name = "Machinery"
+const selectedClient = "Toyota Corparation"
 
 
 function App() {
@@ -22,9 +25,10 @@ function App() {
                 />
                 <SearchFormClient 
                 />
-                <Client />
-                <Client />
-                <Client />
+                <CreateClient />
+                
+                
+                
                 
             </div>
             <div className="part-panel">
@@ -44,6 +48,12 @@ function App() {
                 <Part />
                 <Part />
                 <Part />
+
+                <CreatePart 
+                    client= {selectedClient}
+                />
+                
+                
                 
             </div>
             <div className="bottom-panel">
