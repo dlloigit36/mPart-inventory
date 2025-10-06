@@ -2,30 +2,36 @@ import React, { useState } from "react";
 
 function CreatePart(props) {
   const [isExpanded, setExpanded] = useState(false);
+
+  
   
   const [part, setPart] = useState({
-    client: "",
-    title: "",
-    number: "",
-    id: "",
-    photoUrl: ""        
+    clientName: "",
+    pName: "",
+    pNumber: "",
+    pId: "",
+    pUri: ""        
   });
 
   function handleChange(event) {
     const { name, value } = event.target;
-        setPart({
-            [name]: value
+        setPart(prevPart => {
+          return {
+            ...prevPart, [name]: value
+          }
         });    
   }
 
   function submitPart(event) {
+    props.onAddPart(part)
     setPart({
-          client: "",
-          title: "",
-          number: "",
-          id: "",
-          photoUrl: ""
+          clientName: "",
+          pName: "",
+          pNumber: "",
+          pId: "",
+          pUri: ""
           });
+    event.preventDefault();
   }
 
   function expand(params) {
@@ -37,37 +43,39 @@ function CreatePart(props) {
     <div className="create-part" onClick={expand}>
       <form >
         { isExpanded && <input 
-          name= "client"
-          value={props.client}
-          readOnly
+          name= "clientName"
+          value={part.clientName}
+          onChange={handleChange}
+          placeholder="Enter client name......."
         /> }
         <input 
-            name="title"
-            value={part.title}
+            name="pName"
+            value={part.pName}
             onChange={handleChange}
             placeholder="Enter new part name/title to add......."
         />
         { isExpanded && <input 
-            name="number"
-            value={part.number}
+            name="pNumber"
+            value={part.pNumber}
             onChange={handleChange}
             placeholder="Enter part number to add......."
         /> }
         { isExpanded && <input 
-            name="id"
-            value={part.id}
+            name="pId"
+            value={part.pId}
             onChange={handleChange}
             placeholder="Enter part id to add......."
         /> }
         { isExpanded && <input 
-            name="photoUrl"
-            value={part.photoUrl}
+            name="pUri"
+            value={part.pUri}
             onChange={handleChange}
             placeholder="Enter part photo url to add......."
         /> }
         
         
         { isExpanded && <button onClick={submitPart}><span>add</span></button> }
+        
         
       </form>
     </div>

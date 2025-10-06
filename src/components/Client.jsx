@@ -4,8 +4,8 @@ function Client(props) {
     
     return(
         <div className="client">
-            <h2>client name {props.name}</h2>
-            <p>description of client</p>
+            <h2>{props.clientName}</h2>
+            <p>{props.clientDesc}</p>
         </div>
     );
     

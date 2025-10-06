@@ -4,23 +4,28 @@ function CreateClient(props) {
     const [isExpanded, setExpanded] = useState(false);
 
     const [client, setClient] = useState({
-        title: "",
-        content: ""
+        cName: "",
+        cDesc: ""
     });
 
     function handleChange(event) {
         const { name, value } = event.target;
-        setClient({
-            [name]: value
+
+        setClient(prevClient => {
+          return {
+            ...prevClient, [name]: value
+          }
         });
     }
 
     function submitClient(event) {
+      props.onAddClient(client)
         setClient({
-            title: "",
-            content: ""
-        })
-
+          cName: "",
+          cDesc: ""
+        });
+      event.preventDefault();
+      
     }
 
 function expand() {
@@ -31,15 +36,15 @@ function expand() {
     <div className="create-client" onClick={expand}>
       <form >
         <input 
-            name="title"
-            value={client.title}
+            name="cName"
+            value={client.cName}
             onChange={handleChange}
             placeholder="Enter new client/company name to add......."
         />
         { isExpanded && <textarea 
-            name="content"
+            name="cDesc"
+            value={client.cDesc}
             onChange={handleChange}
-            value={client.content}
             placeholder="Client/company description......"
         /> }
         
