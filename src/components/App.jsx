@@ -8,18 +8,26 @@ import SearchFormClient from "./SearchFormClient"
 import SearchFormPart from "./SearchFormPart"
 import CreateClient from "./CreateClient"
 import CreatePart from "./CreatePart"
+import dbClients from "../db-data.js"
+
 
 const name = "Machinery"
-const selectedClient = "Toyota Corparation"
 
 
 function App() {
-    const [clients, setClients] = useState([]);
+    const [clients, setClients] = useState(dbClients);
     const [parts, setParts] = useState([])
 
+    const [selectedClient, setSelectedClient] = useState("") 
+
     function addClient(newClient) {
+        let anotherClient = {
+            key: clients.length + 1,
+            name: newClient.cName,
+            description: newClient.cDesc
+        } 
         setClients(prevClient => {
-            return [...prevClient, newClient]
+            return [...prevClient, anotherClient]
         });
     }
 
@@ -27,6 +35,12 @@ function App() {
         setParts(prevPart => {
             return [...prevPart, newPart]
         });
+    }
+
+    // function when client div clicked
+    function selectClient(clientName, clientIndex) {
+        // parts display only for selected client name, input = client id
+        setSelectedClient(clientIndex)
     }
 
     return (
@@ -40,18 +54,19 @@ function App() {
                 />
                 <SearchFormClient 
                 />
+                <p>selected client index= {selectedClient}</p>
                 {clients.map((clientItem, index) => {
                     return (
                         <Client 
                             key={index}
                             id={index}
-                            clientName={clientItem.cName}
-                            clientDesc={clientItem.cDesc}
+                            clientName={clientItem.name}
+                            clientDesc={clientItem.description}
+                            onSelected={selectClient}
                         />
                     );
                 })}
                 <CreateClient onAddClient={addClient}/>
-                
                 
                 
             </div>

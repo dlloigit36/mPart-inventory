@@ -63,6 +63,10 @@ header h1 {
   float: left;
 }
 
+.client:hover {
+  background-color: #ecd187;
+}
+
 .show-all button {
   position: relative;
   width: 100%;
