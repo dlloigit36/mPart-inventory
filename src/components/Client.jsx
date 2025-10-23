@@ -2,7 +2,7 @@ import React from "react"
 
 function Client(props) {
     function handleSelect() {
-        props.onSelected(props.clientName, props.id)
+        props.onSelected(props.clientName, props.clientKey, props.id)
     }
     
     return(

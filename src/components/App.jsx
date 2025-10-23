@@ -18,7 +18,12 @@ function App() {
     const [clients, setClients] = useState(dbClients);
     const [parts, setParts] = useState([])
 
-    const [selectedClient, setSelectedClient] = useState("") 
+    const [selectedClient, setSelectedClient] = useState({
+        // id is array index, key is db-data key
+        name: "",
+        key: "",
+        id: ""
+    })
 
     function addClient(newClient) {
         let anotherClient = {
@@ -38,9 +43,14 @@ function App() {
     }
 
     // function when client div clicked
-    function selectClient(clientName, clientIndex) {
+    function selectClient(clientName, clientKey, clientId) {
         // parts display only for selected client name, input = client id
-        setSelectedClient(clientIndex)
+        setSelectedClient({
+            name: clientName,
+            key: clientKey,
+            id: clientId
+        })
+        
     }
 
     return (
@@ -54,12 +64,13 @@ function App() {
                 />
                 <SearchFormClient 
                 />
-                <p>selected client index= {selectedClient}</p>
+                <p>selected client= {selectedClient.name}, index= {selectedClient.id}, key= {selectedClient.key}</p>
                 {clients.map((clientItem, index) => {
                     return (
                         <Client 
                             key={index}
                             id={index}
+                            clientKey={clientItem.key}
                             clientName={clientItem.name}
                             clientDesc={clientItem.description}
                             onSelected={selectClient}
