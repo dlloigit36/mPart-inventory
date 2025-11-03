@@ -8,7 +8,7 @@ import SearchFormClient from "./SearchFormClient"
 import SearchFormPart from "./SearchFormPart"
 import CreateClient from "./CreateClient"
 import CreatePart from "./CreatePart"
-import fetchClients from "../db-data.js"
+import fetchClients, {addDbClient} from "../db-data.js"
 
 
 const name = "Machinery"
@@ -32,11 +32,10 @@ function App() {
         };
 
         loadItems();
-    }, []); // Empty dependency array means this effect runs once on mount
+    }, [addClient]); // Empty dependency array means this effect runs once on mount
 
 
     const [selectedClient, setSelectedClient] = useState({
-        // id is array index, key is db-data key
         id: "",
         name: "",
         description: ""
@@ -44,13 +43,11 @@ function App() {
 
     function addClient(newClient) {
         let anotherClient = {
-            id: clients.length + 1,
             name: newClient.cName,
             description: newClient.cDesc
-        } 
-        setClients(prevClient => {
-            return [...prevClient, anotherClient]
-        });
+        }
+        addDbClient(anotherClient);
+
     }
 
     function addPart(newPart) {
@@ -61,7 +58,7 @@ function App() {
 
     // function when client div clicked
     function selectClient(clientId, clientName, clientDesc) {
-        // parts display only for selected client name, input = client id
+        // id is database table client_detail id
         setSelectedClient({
             id: clientId,
             name: clientName,

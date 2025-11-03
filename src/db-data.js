@@ -25,5 +25,22 @@ async function fetchClients(clientname) {
   return clientList; 
 }
 
+// function to send http post with client details to backend api post "/client/new"
+async function addDbClient(params) {
+  let clientDetails= {
+    cname: params.name,
+    cdesc: params.description
+  };
+
+  try {
+    const result = await axios.post(API_URL + "/client/new", clientDetails, config);
+    // console.log("posted new client to api. return =", result.data);
+    
+  } catch (error) {
+    console.log("error connecting to machinery backend API = ", error.stack);
+  }
+  
+}
 
 export default fetchClients;
+export {addDbClient};
