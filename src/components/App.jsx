@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Header from "./Header"
 import Footer from "./Footer"
 import Client from "./Client"
@@ -8,26 +8,43 @@ import SearchFormClient from "./SearchFormClient"
 import SearchFormPart from "./SearchFormPart"
 import CreateClient from "./CreateClient"
 import CreatePart from "./CreatePart"
-import dbClients from "../db-data.js"
+import fetchClients from "../db-data.js"
 
 
 const name = "Machinery"
 
-
 function App() {
-    const [clients, setClients] = useState(dbClients);
-    const [parts, setParts] = useState([])
+    const [clients, setClients] = useState([]);
+    const [isLoading, setIsLoading] = useState(true); // To indicate data fetching status
+    const [error, setError] = useState(null); // To store any error during fetching
+    const [parts, setParts] = useState([]);
+
+    useEffect(() => {
+        const loadItems = async () => {
+        try {
+            const data = await fetchClients("*");
+            setClients(data);
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
+        }
+        };
+
+        loadItems();
+    }, []); // Empty dependency array means this effect runs once on mount
+
 
     const [selectedClient, setSelectedClient] = useState({
         // id is array index, key is db-data key
+        id: "",
         name: "",
-        key: "",
-        id: ""
+        description: ""
     })
 
     function addClient(newClient) {
         let anotherClient = {
-            key: clients.length + 1,
+            id: clients.length + 1,
             name: newClient.cName,
             description: newClient.cDesc
         } 
@@ -43,16 +60,23 @@ function App() {
     }
 
     // function when client div clicked
-    function selectClient(clientName, clientKey, clientId) {
+    function selectClient(clientId, clientName, clientDesc) {
         // parts display only for selected client name, input = client id
         setSelectedClient({
+            id: clientId,
             name: clientName,
-            key: clientKey,
-            id: clientId
+            description: clientDesc
         })
-        
     }
 
+    if (isLoading) {
+        return <p>Loading items...</p>;
+    }
+
+    if (error) {
+        return <p>Error: {error}</p>;
+    }
+    
     return (
         <div>
             <Header 
@@ -64,13 +88,13 @@ function App() {
                 />
                 <SearchFormClient 
                 />
-                <p>selected client= {selectedClient.name}, index= {selectedClient.id}, key= {selectedClient.key}</p>
+                <p>selected client= {selectedClient.name}, id= {selectedClient.id}</p>
                 {clients.map((clientItem, index) => {
                     return (
                         <Client 
                             key={index}
                             id={index}
-                            clientKey={clientItem.key}
+                            clientId={clientItem.id}
                             clientName={clientItem.name}
                             clientDesc={clientItem.description}
                             onSelected={selectClient}

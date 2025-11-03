@@ -1,34 +1,29 @@
-const dbClients = [
-  {
-    key: 1,
-    name: "Delegation",
-    description:
-      "Q. How many programmers does it take to change a light bulb?"
-  },
-  {
-    key: 2,
-    name: "Loops",
-    description:
-      "How to keep a programmer in the shower forever."
-  },
-  {
-    key: 3,
-    name: "Arrays",
-    description:
-      "Q. Why did the programmer quit his job? A. Because he didn't get arrays."
-  },
-  {
-    key: 4,
-    name: "Hardware vs. Software",
-    description:
-      "What's the difference between hardware and software?"
-  },
-  {
-    key: 5,
-    name: "This is added by me",
-    description:
-      "What's the difference between hardware and software? You thought?"
-  }
-];
+// functions to query data/records from mlist-api
+// import React from "react";
+import axios from "axios";
 
-export default dbClients;
+const API_HOST = import.meta.env.VITE_API_HOST;
+const API_PORT = import.meta.env.VITE_API_PORT;
+const API_URL = `http://${API_HOST}:${API_PORT}`;
+
+
+const API_Key = import.meta.env.VITE_API_KEY;
+const config = {
+    params: { key: API_Key}
+};
+
+
+async function fetchClients(clientname) {
+  let clientList = [];
+  try {
+    const result = await axios.get(API_URL + "/clients?clientname="+ clientname, config);
+    // const result = await axios.get(API_URL + "/clients?clientname=*", config);
+    clientList = result.data;
+  } catch (error) {
+    console.log(error);
+  }
+  return clientList; 
+}
+
+
+export default fetchClients;
