@@ -42,7 +42,7 @@ header h1 {
   width: 67%;
   height: 80vh;
   margin: 30px auto 20px auto;
-  float: right;
+  /* float: right; */
   overflow-y: scroll;
   overflow-x: hidden;
   /* background-color: rgb(7, 19, 19); */
