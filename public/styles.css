@@ -28,10 +28,12 @@ header h1 {
 
 .client-panel {
   position: relative;
-  width: 30%;
-  height: max-content;
+  width: 32%;
+  height: 80vh;
   margin: 30px auto 20px auto;
   float:left;
+  overflow-y: scroll;
+  overflow-x: hidden;
   /* background-color: aqua; */
 }
 
@@ -54,7 +56,7 @@ header h1 {
 
 .client {
   position: relative;
-  width: 100%;
+  width: 99%;
   margin: 1px;
   background: #fff;
   padding: 15px;
@@ -69,7 +71,7 @@ header h1 {
 
 .show-all button {
   position: relative;
-  width: 100%;
+  width: 99%;
   margin: 1px;
   border: transparent;
   background-color: #ecd187;
@@ -112,20 +114,9 @@ header h1 {
   word-wrap: break-word;
 }
 
-.note button {
-  position: relative;
-  float: right;
-  margin-right: 10px;
-  color: #f5ba13;
-  border: none;
-  width: 36px;
-  height: 36px;
-  cursor: pointer;
-  outline: none;
-}
 
 .search-form input {
-  width: 85%;
+  width: 99%;
   border: transparent;
   padding: 7px;
   outline: none;
@@ -137,14 +128,14 @@ header h1 {
 }
 .search-form button {
   position: relative;
-  width: 14%;
+  width: 13%;
   margin: 1px;
   border: transparent;
   background-color: #ecd187;
   padding: 7px;
   border-radius: 7px;
   box-shadow: 0 1px 5px rgb(138, 137, 137);
-  float: right;
+  float: left;
 }
 
 .search-form p {
@@ -159,7 +150,7 @@ header h1 {
 
 .create-client {
   position: relative;
-  width: 100%;
+  width: 99%;
   margin: 5px 0px;
   background: #fff;
   padding: 15px;
