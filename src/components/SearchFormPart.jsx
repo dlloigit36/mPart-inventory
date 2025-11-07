@@ -3,12 +3,11 @@ import React, {useState} from "react";
 
 function SearchForm(props) {
     const [part, setPart] = useState("");
-    const [isHidden, setHidden] = useState(true);
 
     function handleChange(event) {
     const { name, value } = event.target;
         setPart(value);
-        setHidden(false)
+        
     }
     
     return(
@@ -20,9 +19,7 @@ function SearchForm(props) {
                     value={part}
                     onChange={handleChange}
                     />
-                <button><span>Search</span></button>
             </form>
-            <p hidden={isHidden}>Searching part: {part}</p>
         </div>
     );
     

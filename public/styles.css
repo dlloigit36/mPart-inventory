@@ -39,10 +39,12 @@ header h1 {
 
 .part-panel {
   position: relative;
-  width: 68%;
-  height: max-content;
+  width: 67%;
+  height: 80vh;
   margin: 30px auto 20px auto;
-  float:right;
+  float: right;
+  overflow-y: scroll;
+  overflow-x: hidden;
   /* background-color: rgb(7, 19, 19); */
 }
 
@@ -72,7 +74,7 @@ header h1 {
 .show-all button {
   position: relative;
   width: 99%;
-  margin: 1px;
+  margin: 2px;
   border: transparent;
   background-color: #ecd187;
   padding: 7px;
@@ -117,6 +119,7 @@ header h1 {
 
 .search-form input {
   width: 99%;
+  margin: 2px;
   border: transparent;
   padding: 7px;
   outline: none;
@@ -151,7 +154,7 @@ header h1 {
 .create-client {
   position: relative;
   width: 99%;
-  margin: 5px 0px;
+  margin: 5px 1px;
   background: #fff;
   padding: 15px;
   border-radius: 7px;
@@ -185,8 +188,8 @@ header h1 {
 
 .create-part {
   position: relative;
-  width: 100%;
-  margin: 5px 0px;
+  width: 99%;
+  margin: 5px 1px;
   background: #fff;
   padding: 15px;
   border-radius: 7px;
