@@ -4,11 +4,11 @@ import Footer from "./Footer"
 import Client from "./Client"
 import Part from "./Part"
 import ButtonShowAll from "./ButtonShowAll"
-import SearchFormClient from "./SearchFormClient"
 import SearchFormPart from "./SearchFormPart"
 import CreateClient from "./CreateClient"
 import CreatePart from "./CreatePart"
 import fetchClients, {addDbClient} from "../data/db-data.js"
+import SearchClientBox from "./SearchClientBox.jsx"
 
 
 const name = "Machinery"
@@ -16,7 +16,7 @@ const name = "Machinery"
 function App() {
     const [clients, setClients] = useState([]);
     const [isLoading, setIsLoading] = useState(true); // To indicate data fetching status
-    const [error, setError] = useState(null); // To store any error during fetching
+    const [error, setError] = useState(""); // To store any error during fetching
     const [parts, setParts] = useState([]);
 
     const [selectedClient, setSelectedClient] = useState({
@@ -83,8 +83,7 @@ function App() {
                 <ButtonShowAll 
                     type="client"
                 />
-                <SearchFormClient 
-                />
+                <SearchClientBox dbClients={clients}/>
                 <p>selected client= {selectedClient.name}, id= {selectedClient.id}</p>
                 {clients.map((clientItem, index) => {
                     return (

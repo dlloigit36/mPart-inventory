@@ -42,5 +42,48 @@ async function addDbClient(params) {
   
 }
 
+const staticData = [
+    {
+        "id": 1,
+        "name": "AAA Company",
+        "description": "manually added from sql command 1."
+    },
+    {
+        "id": 2,
+        "name": "BBB Company",
+        "description": "manually added from sql command 2."
+    },
+    {
+        "id": 3,
+        "name": "CCC Company",
+        "description": "manually added from sql command 3."
+    },
+    {
+        "id": 7,
+        "name": "A1 company",
+        "description": "from postman"
+    },
+    {
+        "id": 8,
+        "name": "B2 company",
+        "description": "from website"
+    },
+    {
+        "id": 9,
+        "name": "B3 company",
+        "description": "from website take 2"
+    },
+    {
+        "id": 10,
+        "name": "B4 company",
+        "description": "from website take 3"
+    },
+    {
+        "id": 11,
+        "name": "B5 company",
+        "description": "from website take 6"
+    }
+]
+
 export default fetchClients;
-export {addDbClient};
+export {addDbClient, staticData};
