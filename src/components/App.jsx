@@ -8,7 +8,7 @@ import SearchFormClient from "./SearchFormClient"
 import SearchFormPart from "./SearchFormPart"
 import CreateClient from "./CreateClient"
 import CreatePart from "./CreatePart"
-import fetchClients, {addDbClient} from "../db-data.js"
+import fetchClients, {addDbClient} from "../data/db-data.js"
 
 
 const name = "Machinery"
@@ -18,6 +18,12 @@ function App() {
     const [isLoading, setIsLoading] = useState(true); // To indicate data fetching status
     const [error, setError] = useState(null); // To store any error during fetching
     const [parts, setParts] = useState([]);
+
+    const [selectedClient, setSelectedClient] = useState({
+        id: "",
+        name: "",
+        description: ""
+    })
 
     useEffect(() => {
         const loadItems = async () => {
@@ -34,12 +40,6 @@ function App() {
         loadItems();
     }, [addClient]); // Empty dependency array means this effect runs once on mount
 
-
-    const [selectedClient, setSelectedClient] = useState({
-        id: "",
-        name: "",
-        description: ""
-    })
 
     function addClient(newClient) {
         let anotherClient = {
