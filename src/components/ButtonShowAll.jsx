@@ -1,10 +1,14 @@
 import React from "react";
 
 function ButtonShowAll(props) {
+
+    function handleClick() {
+        props.onShowAllClicked()
+    }
     
     return(
         <div className="show-all">
-            <button>Show all {props.type}</button>
+            <button onClick={() => handleClick()}>{props.textLabel}</button>
         </div>
     );
     

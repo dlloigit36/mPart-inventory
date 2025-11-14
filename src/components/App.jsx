@@ -3,7 +3,6 @@ import Header from "./Header"
 import Footer from "./Footer"
 import Client from "./Client"
 import Part from "./Part"
-import ButtonShowAll from "./ButtonShowAll"
 import SearchFormPart from "./SearchFormPart"
 import CreateClient from "./CreateClient"
 import CreatePart from "./CreatePart"
@@ -14,30 +13,34 @@ import SearchClientBox from "./SearchClientBox.jsx"
 const name = "Machinery"
 
 function App() {
-    const [clients, setClients] = useState([]);
+    const [clients, setClients] = useState([]); //db search all clients on reload or refresh
     const [isLoading, setIsLoading] = useState(true); // To indicate data fetching status
     const [error, setError] = useState(""); // To store any error during fetching
     const [parts, setParts] = useState([]);
+    const [filteredClient, setFilteredClient] = useState([]);
 
-    const [selectedClient, setSelectedClient] = useState({
+    const [clickedClient, setClickedClient] = useState({
         id: "",
         name: "",
         description: ""
-    })
+    });
 
-    useEffect(() => {
-        const loadItems = async () => {
+    async function loadData(keyWord) {
         try {
-            const data = await fetchClients("*");
+            const data = await fetchClients(keyWord);
             setClients(data);
         } catch (err) {
             setError(err.message);
         } finally {
             setIsLoading(false);
-        }
         };
+        
+    }
 
-        loadItems();
+
+    useEffect(() => {
+        //load client list from database
+        loadData("*")
     }, [addClient]); // Empty dependency array means this effect runs once on mount
 
 
@@ -46,7 +49,8 @@ function App() {
             name: newClient.cName,
             description: newClient.cDesc
         }
-        addDbClient(anotherClient);
+        const resp = addDbClient(anotherClient);
+        console.log(`error add new client: ${resp}`)
 
     }
 
@@ -59,11 +63,23 @@ function App() {
     // function when client div clicked
     function selectClient(clientId, clientName, clientDesc) {
         // id is database table client_detail id
-        setSelectedClient({
+        setClickedClient({
             id: clientId,
             name: clientName,
             description: clientDesc
         })
+    }
+
+    // function search client term return client name
+    function onSearchClientName(client) {
+        const filtered = clients.filter((item) => {
+            return item.name === client.name
+        });
+        setFilteredClient(filtered);
+    }
+
+    function resetFilter() {
+        setFilteredClient([]);
     }
 
     if (isLoading) {
@@ -80,12 +96,27 @@ function App() {
                 name= {name}
             />
             <div className="client-panel">
-                <ButtonShowAll 
-                    type="client"
+                <SearchClientBox 
+                    dbClients={clients}
+                    onReturnClientName={onSearchClientName}
+                    onResetFilteredClient={resetFilter}
                 />
-                <SearchClientBox dbClients={clients}/>
-                <p>selected client= {selectedClient.name}, id= {selectedClient.id}</p>
-                {clients.map((clientItem, index) => {
+                <CreateClient 
+                    onAddClient={addClient}
+                />
+                <p>clicked client= {clickedClient.name}, id= {clickedClient.id}</p>
+                {filteredClient.length === 0 ? clients.map((clientItem, index) => {
+                    return (
+                        <Client 
+                            key={index}
+                            id={index}
+                            clientId={clientItem.id}
+                            clientName={clientItem.name}
+                            clientDesc={clientItem.description}
+                            onSelected={selectClient}
+                        />
+                    );
+                }) : filteredClient.map((clientItem, index) => {
                     return (
                         <Client 
                             key={index}
@@ -97,14 +128,9 @@ function App() {
                         />
                     );
                 })}
-                <CreateClient onAddClient={addClient}/>
-                
                 
             </div>
             <div className="part-panel">
-                <ButtonShowAll 
-                    type="part"
-                />
                 <SearchFormPart 
                 />
                 {parts.map((partItem, index) => {
@@ -122,7 +148,7 @@ function App() {
                 })}
                 <CreatePart 
                     onAddPart={addPart}
-                    client= {selectedClient}
+                    client= {clickedClient}
                 />
                 
             </div>

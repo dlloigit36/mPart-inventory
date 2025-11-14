@@ -37,7 +37,7 @@ async function addDbClient(params) {
     // console.log("posted new client to api. return =", result.data);
     
   } catch (error) {
-    console.log("error connecting to machinery backend API = ", error.stack);
+    console.log("error adding new client = ", error.message);
   }
   
 }
