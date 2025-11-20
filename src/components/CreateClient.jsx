@@ -33,7 +33,7 @@ function expand() {
   }
 
   return (
-    <div className="create-client" onClick={expand}>
+    <div className="create-client" onClick={expand} hidden={props.hidden}>
       <form >
         <input 
             name="cName"
@@ -48,7 +48,7 @@ function expand() {
             placeholder="Client/company description......"
         /> }
         
-        { isExpanded && <button onClick={submitClient}><span>add</span></button> }
+        { isExpanded && <button onClick={submitClient}><span>+</span></button> }
         
       </form>
     </div>

@@ -126,18 +126,19 @@ header h1 {
 
 .search-icon {
   position: absolute;
-  right: 19px;
-  color: #888; /* Example color */
-  /* Other styling like font-size */
-  margin-top: 12px;
+  left: 12px; /* Adjust for desired icon position */
+  top: 50%;
+  transform: translateY(-50%); 
+  color: #888; /* Adjust icon color */
+  margin-top: 17px;
 }
 
 .search-input input {
-  padding-left: 35px; /* Adjust to create space for the icon */
   width: 99%;
   margin: 2px;
   border: transparent;
   padding: 7px;
+  padding-left: 30px;
   outline: none;
   font-size: 1.2em;
   font-family: inherit; 
@@ -176,6 +177,7 @@ header h1 {
   border-radius: 7px;
   box-shadow: 0 1px 5px rgb(138, 137, 137);
   float: left;
+  margin-bottom: 20px;
 }
 .create-client form input,
 .create-client form textarea {

@@ -6,7 +6,7 @@ import Part from "./Part"
 import SearchFormPart from "./SearchFormPart"
 import CreateClient from "./CreateClient"
 import CreatePart from "./CreatePart"
-import fetchClients, {addDbClient} from "../data/db-data.js"
+import fetchClients, {addDbClient, staticData} from "../data/db-data.js"
 import SearchClientBox from "./SearchClientBox.jsx"
 
 
@@ -18,6 +18,7 @@ function App() {
     const [error, setError] = useState(""); // To store any error during fetching
     const [parts, setParts] = useState([]);
     const [filteredClient, setFilteredClient] = useState([]);
+    const [hideCreateClient, setHideCreateClient] = useState(false)
 
     const [clickedClient, setClickedClient] = useState({
         id: "",
@@ -27,8 +28,8 @@ function App() {
 
     async function loadData(keyWord) {
         try {
-            const data = await fetchClients(keyWord);
-            setClients(data);
+            // const data = await fetchClients(keyWord);
+            setClients(staticData);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -76,10 +77,12 @@ function App() {
             return item.name === client.name
         });
         setFilteredClient(filtered);
+        setHideCreateClient(true);
     }
 
     function resetFilter() {
         setFilteredClient([]);
+        setHideCreateClient(false);
     }
 
     if (isLoading) {
@@ -103,8 +106,9 @@ function App() {
                 />
                 <CreateClient 
                     onAddClient={addClient}
+                    hidden={hideCreateClient}
                 />
-                <p>clicked client= {clickedClient.name}, id= {clickedClient.id}</p>
+                {/* <p>clicked client= {clickedClient.name}, id= {clickedClient.id}</p> */}
                 {filteredClient.length === 0 ? clients.map((clientItem, index) => {
                     return (
                         <Client 
