@@ -16,7 +16,8 @@ pipeline {
                     checkout([$class: 'GitSCM', branches: [[name: '*/static-data']],
                               userRemoteConfigs: [[url: 'https://github.com/dlloigit36/mPart-inventory.git']]])
                     GIT_COMMIT_HASH = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
-                    DOCKER_TAG = "${env.BUILD_NUMBER}-${GIT_COMMIT_HASH}"
+                    def TODAY_DATE = sh(script: "date +%Y%m%d", returnStdout: true).trim()
+                    DOCKER_TAG = "${TODAY_DATE}-${env.BUILD_NUMBER}-${GIT_COMMIT_HASH}"
                     echo "Using Docker tag: ${DOCKER_TAG}"
                 }
                 // Replace with your GitHub repo URL
