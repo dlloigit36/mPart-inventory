@@ -4,21 +4,34 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-repo') // Jenkins credential ID
         DOCKER_IMAGE = "dlloihub36/mpart-app"
-        DOCKER_TAG = "0.0.2"
+        GIT_COMMIT_HASH = ""
+        DOCKER_TAG = ""
+
     }
 
     stages {
         stage('Checkout') {
             steps {
+                script {
+                    checkout([$class: 'GitSCM', branches: [[name: '*/static-data']],
+                              userRemoteConfigs: [[url: 'https://github.com/dlloigit36/mPart-inventory.git']]])
+                    GIT_COMMIT_HASH = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+                    DOCKER_TAG = "${env.BUILD_NUMBER}-${GIT_COMMIT_HASH}"
+                    echo "Using Docker tag: ${DOCKER_TAG}"
+                }
                 // Replace with your GitHub repo URL
-                git branch: 'static-data', url: 'https://github.com/dlloigit36/mPart-inventory.git'
+                // git branch: 'static-data', url: 'https://github.com/dlloigit36/mPart-inventory.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."                      
+                    try {
+                        sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
+                    } catch (err) {
+                        error("Docker build failed: ${err}")
+                    }                  
                 }
             }
         }
@@ -26,7 +39,12 @@ pipeline {
         stage('Docker login') {
             steps {
                 script {
-                    sh 'echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin'
+                    try {
+                        sh 'echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin'
+                    } catch (err) {
+                        error("Docker login failed: ${err}")
+                    }
+                    
                 }
             }
         }
@@ -34,15 +52,25 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                    try {
+                        sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                    } catch (err) {
+                        error("Docker push failed: ${err}")
+                    }
                 }
             }
         }
     }
 
     post {
-            always {
-                echo 'Pipeline finished.'
-            }
+        success {
+            echo "Image pushed successfully: ${DOCKER_IMAGE}:${DOCKER_TAG}"
         }
+        failure {
+            echo "Pipeline failed. Check logs for details."
+        }
+        always {
+            echo "Pipeline finished."
+        }
+    }
 }
