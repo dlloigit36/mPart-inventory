@@ -126,18 +126,18 @@ header h1 {
 
 .search-icon {
   position: absolute;
-  right: 19px;
+  left: 15px;
   color: #888; /* Example color */
   /* Other styling like font-size */
   margin-top: 12px;
 }
 
 .search-input input {
-  padding-left: 35px; /* Adjust to create space for the icon */
   width: 99%;
   margin: 2px;
   border: transparent;
   padding: 7px;
+  padding-left: 35px; /* Adjust to create space for the icon */
   outline: none;
   font-size: 1.2em;
   font-family: inherit; 
