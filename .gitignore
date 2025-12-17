@@ -1,6 +1,9 @@
 # .gitignore
 .env
 
+# exclude tar file
+*.tgz
+
 # Logs
 logs
 *.log
